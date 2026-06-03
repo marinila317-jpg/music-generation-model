@@ -1,0 +1,8 @@
+torch
+torchaudio
+numpy
+pandas
+scikit-learn
+tensorflow
+midiutil
+pretty_midi
