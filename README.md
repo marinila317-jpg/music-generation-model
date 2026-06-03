@@ -50,6 +50,33 @@ For a more interactive experience, you can use the Gradio web interface:
     ```
 2.  Open the provided local or public URL in your browser.
 
+## Fine-tuning MusicGen
+
+To fine-tune the MusicGen model on your custom dataset (e.g., for a specific genre like "Dark Ethno Folk"), follow these steps:
+
+1.  **Prepare your dataset:**
+    *   Create a directory (e.g., `data/my_custom_music/`).
+    *   Place your audio files (preferably `.wav` format) into this directory.
+    *   Create a `metadata.csv` file inside your dataset directory. This file should contain at least two columns: `path` (relative path to the audio file from the dataset directory) and `text` (a descriptive caption for the audio).
+    *   Example `data/my_custom_music/metadata.csv`:
+        ```csv
+        path,text,genre
+        track1.wav,"A dark ethno folk track with deep drums and mystical chanting",folk
+        track2.wav,"Ambient soundscape with tribal percussion and deep bass",ambient
+        ```
+
+2.  **Run the fine-tuning script:**
+    ```bash
+    python training/finetune.py --dataset_dir data/my_custom_music/ --output_dir checkpoints/finetuned_musicgen/
+    ```
+    *   `--dataset_dir`: Path to your custom dataset directory containing audio files and `metadata.csv`.
+    *   `--output_dir`: Directory where the fine-tuned model checkpoint will be saved.
+
+**Important Notes on Fine-tuning:**
+*   The actual fine-tuning process for AudioCraft/MusicGen is complex and requires a dedicated training setup, often involving distributed training and specific data preprocessing pipelines (e.g., tokenization with EnCodec). The provided `finetune.py` script is a conceptual outline.
+*   You will need a GPU with sufficient VRAM for fine-tuning, especially for larger models.
+*   Refer to the official AudioCraft documentation and examples for a full implementation of custom model training.
+
 ## Architectures Explored
 
 This project initially includes a basic LSTM model and is being expanded to integrate more advanced architectures:
