@@ -32,12 +32,23 @@ This repository contains the source code and resources for developing a deep lea
    python training/train.py --config configs/default.yaml
    ```
 
-5. Generate music with MusicGen:
+5. Generate music with MusicGen (Command Line):
+
    ```bash
    python generation/generate.py --prompt "a cheerful and upbeat pop song" --duration 10 --model_version small
    ```
    You can specify different prompts, duration, and model versions (small, medium, large, melody).
 
+
+## Web Interface (Gradio)
+
+For a more interactive experience, you can use the Gradio web interface:
+
+1.  **Run the Gradio app:**
+    ```bash
+    python app.py
+    ```
+2.  Open the provided local or public URL in your browser.
 
 ## Architectures Explored
 

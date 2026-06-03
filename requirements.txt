@@ -8,3 +8,5 @@ midiutil
 pretty_midi
 
 audiocraft
+
+gradio
