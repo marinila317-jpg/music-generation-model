@@ -32,16 +32,21 @@ This repository contains the source code and resources for developing a deep lea
    python training/train.py --config configs/default.yaml
    ```
 
-5. Generate music:
+5. Generate music with MusicGen:
    ```bash
-   python generation/generate.py --model_path checkpoints/best_model.pth --output_dir outputs/
+   python generation/generate.py --prompt "a cheerful and upbeat pop song" --duration 10 --model_version small
    ```
+   You can specify different prompts, duration, and model versions (small, medium, large, melody).
+
 
 ## Architectures Explored
 
-- **Transformers**: Auto-regressive models for symbolic music generation.
-- **Variational Autoencoders (VAEs)**: For learning latent representations of musical segments.
-- **Diffusion Models**: For high-fidelity audio generation.
+This project initially includes a basic LSTM model and is being expanded to integrate more advanced architectures:
+
+- **MusicGen (via AudioCraft)**: State-of-the-art text-to-music generation from Meta, allowing generation from text prompts.
+- **Transformers**: Auto-regressive models suitable for symbolic music generation, capturing long-range dependencies.
+- **Variational Autoencoders (VAEs)**: Useful for learning latent representations of musical segments, enabling interpolation and style transfer.
+- **Diffusion Models**: Advanced models for high-fidelity audio generation, capable of producing realistic soundscapes and musical pieces.
 
 ## License
 
