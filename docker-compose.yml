@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  musicgen-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./generated_music:/app/generated_music
+      # Uncomment the line below if you want to persist downloaded models
+      # - ~/.cache/audiocraft:/root/.cache/audiocraft
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: python app.py

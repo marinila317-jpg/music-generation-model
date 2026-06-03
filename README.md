@@ -86,6 +86,36 @@ This project initially includes a basic LSTM model and is being expanded to inte
 - **Variational Autoencoders (VAEs)**: Useful for learning latent representations of musical segments, enabling interpolation and style transfer.
 - **Diffusion Models**: Advanced models for high-fidelity audio generation, capable of producing realistic soundscapes and musical pieces.
 
+## Docker Support
+
+To run the project using Docker for easier setup and deployment, especially on environments with GPU support:
+
+1.  **Build the Docker image:**
+    ```bash
+    docker build -t musicgen-app .
+    ```
+
+2.  **Run the container (for Gradio web interface):**
+    ```bash
+    docker run --gpus all -p 7860:7860 -v $(pwd)/generated_music:/app/generated_music musicgen-app
+    ```
+    *   `--gpus all`: This flag is crucial for enabling GPU access within the container, which is required for MusicGen. Ensure you have NVIDIA Container Toolkit installed.
+    *   `-p 7860:7860`: Maps the container's port 7860 to your host's port 7860.
+    *   `-v $(pwd)/generated_music:/app/generated_music`: Mounts a local directory to persist generated music files.
+
+3.  **Using Docker Compose (recommended for easier management):**
+    ```bash
+    docker compose up --build
+    ```
+    This will build the image (if not already built) and start the Gradio application, exposing it on port 7860.
+
+    To stop the services:
+    ```bash
+    docker compose down
+    ```
+
+**Important Note:** For GPU support with Docker, you need to have the NVIDIA Container Toolkit installed on your system.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
