@@ -3,6 +3,7 @@ import os
 import torch
 from audiocraft.models import MusicGen
 from audiocraft.data.audio import audio_write
+from post_processing import apply_post_processing
 
 # Load the MusicGen model once when the app starts
 # Using 'small' model for faster loading and less memory usage for a demo
@@ -10,7 +11,7 @@ from audiocraft.data.audio import audio_write
 print("Loading MusicGen model (small) for Gradio app...")
 model = MusicGen.get_pretrained("small")
 
-def generate_music_gradio(prompt, duration, model_version):
+def generate_music_gradio(prompt, duration, model_version, post_process_preset):
     """
     Generates music using MusicGen from AudioCraft based on a text prompt
     and returns the path to the generated audio file.
@@ -34,7 +35,8 @@ def generate_music_gradio(prompt, duration, model_version):
     output_path = os.path.join(output_dir, f"musicgen_output_{safe_prompt}_{duration}s.wav")
 
     for idx, one_wav in enumerate(wav):
-        audio_write(output_path, one_wav.cpu(), model.sample_rate, strategy="loudness", loudness_compressor=True)
+        processed_audio = apply_post_processing(one_wav.cpu().numpy(), model.sample_rate, post_process_preset)
+        audio_write(output_path, torch.from_numpy(processed_audio), model.sample_rate, strategy="loudness", loudness_compressor=True)
         print(f"Generated music saved to {output_path}")
         break # Only save the first generated sample for simplicity
 
@@ -46,7 +48,8 @@ iface = gr.Interface(
     inputs=[
         gr.Textbox(label="Text Prompt", placeholder="e.g., 'Dark Ethno Folk with mystical atmosphere and heavy drums'"),
         gr.Slider(minimum=5, maximum=30, value=10, step=1, label="Duration (seconds)"),
-        gr.Dropdown(choices=["small", "medium", "large", "melody"], value="small", label="MusicGen Model Version")
+        gr.Dropdown(choices=["small", "medium", "large", "melody"], value="small", label="MusicGen Model Version"),
+        gr.Dropdown(choices=["none", "default", "dark_ethno_folk"], value="none", label="Post-processing Preset")
     ],
     outputs=gr.Audio(label="Generated Music"),
     title="Music Generation with MusicGen (AudioCraft)",

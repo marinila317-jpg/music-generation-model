@@ -10,3 +10,5 @@ pretty_midi
 audiocraft
 
 gradio
+
+pedalboard

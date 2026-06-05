@@ -2,8 +2,9 @@ import os
 import torch
 from audiocraft.models import MusicGen
 from audiocraft.data.audio import audio_write
+from post_processing import apply_post_processing
 
-def generate_music_with_musicgen(prompt, duration=8, output_dir="outputs", model_version="small"):
+def generate_music_with_musicgen(prompt, duration=8, output_dir="outputs", model_version="small", post_process_preset="none"):
     """
     Generates music using MusicGen from AudioCraft based on a text prompt.
 
@@ -24,8 +25,8 @@ def generate_music_with_musicgen(prompt, duration=8, output_dir="outputs", model
     output_path = os.path.join(output_dir, f"musicgen_output_{prompt.replace(' ', '_')}.wav")
 
     for idx, one_wav in enumerate(wav):
-        # You can save multiple samples if generated
-        audio_write(output_path, one_wav.cpu(), model.sample_rate, strategy="loudness", loudness_compressor=True)
+        processed_audio = apply_post_processing(one_wav.cpu().numpy(), model.sample_rate, post_process_preset)
+        audio_write(output_path, torch.from_numpy(processed_audio), model.sample_rate, strategy="loudness", loudness_compressor=True)
         print(f"Generated music saved to {output_path}")
 
 if __name__ == "__main__":
@@ -40,6 +41,9 @@ if __name__ == "__main__":
     parser.add_argument("--model_version", type=str, default="small",
                         choices=["small", "medium", "large", "melody"],
                         help="Version of the MusicGen model to use.")
+    parser.add_argument("--post_process_preset", type=str, default="none",
+                        choices=["default", "dark_ethno_folk", "none"],
+                        help="Preset for audio post-processing effects (Pedalboard).")
     args = parser.parse_args()
 
-    generate_music_with_musicgen(args.prompt, args.duration, args.output_dir, args.model_version)
+    generate_music_with_musicgen(args.prompt, args.duration, args.output_dir, args.model_version, args.post_process_preset)

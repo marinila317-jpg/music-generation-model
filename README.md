@@ -77,6 +77,24 @@ To fine-tune the MusicGen model on your custom dataset (e.g., for a specific gen
 *   You will need a GPU with sufficient VRAM for fine-tuning, especially for larger models.
 *   Refer to the official AudioCraft documentation and examples for a full implementation of custom model training.
 
+## Audio Post-processing (Pedalboard)
+
+The project now includes an audio post-processing module using Spotify's **Pedalboard** library. This allows for automatic enhancement of the generated music with professional-grade effects.
+
+### Features:
+- **Reverb**: Adds spatial depth and atmosphere.
+- **Compression**: Balances the dynamic range for a more consistent volume.
+- **Gain & EQ**: Fine-tunes the frequency response and overall level.
+
+### Usage:
+- **In Gradio Web Interface**: Select a "Post-processing Preset" (e.g., `dark_ethno_folk`) from the dropdown menu.
+- **Via Command Line**: Use the `--post_process_preset` flag:
+  ```bash
+  python generation/generate.py --prompt "Dark Ethno Folk" --post_process_preset dark_ethno_folk
+  ```
+
+Presets currently available: `none`, `default`, `dark_ethno_folk`.
+
 ## Architectures Explored
 
 This project initially includes a basic LSTM model and is being expanded to integrate more advanced architectures:
