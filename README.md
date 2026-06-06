@@ -104,6 +104,19 @@ This project initially includes a basic LSTM model and is being expanded to inte
 - **Variational Autoencoders (VAEs)**: Useful for learning latent representations of musical segments, enabling interpolation and style transfer.
 - **Diffusion Models**: Advanced models for high-fidelity audio generation, capable of producing realistic soundscapes and musical pieces.
 
+## Google Colab Support
+
+For users with less powerful local machines or without a dedicated GPU, you can run this project directly on Google Colab using its free GPU resources. This provides a powerful environment without local setup complexities.
+
+1.  **Open the Colab Notebook:** Click the badge below or open the `MusicGen_Colab.ipynb` file in the repository directly in Google Colab.
+    [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/marinila317-jpg/music-generation-model/blob/master/MusicGen_Colab.ipynb)
+
+2.  **Run All Cells:** In Colab, go to `Runtime` -> `Run all`.
+
+3.  **Access Gradio Interface:** Once all cells have executed, a public Gradio URL will appear in the output of the last cell. Click this link to access the web interface and start generating music.
+
+**Important:** Ensure your Colab runtime type is set to GPU (`Runtime` -> `Change runtime type` -> `T4 GPU`).
+
 ## Docker Support
 
 To run the project using Docker for easier setup and deployment, especially on environments with GPU support:
